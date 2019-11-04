@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon app.js"
   },
   "keywords": [],
   "author": "",
@@ -13,5 +14,8 @@
     "express": "^4.17.1",
     "mongoose": "^5.7.7",
     "mongoose-paginate": "^5.0.3"
+  },
+  "devDependencies": {
+    "nodemon": "^1.19.4"
   }
 }
