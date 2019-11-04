@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const mongoosePaginate = require('mongoose-paginate');
 
 const EntradaSchema = require('./Entrada');
 const SaidaSchema = require('./Saida');
@@ -18,6 +19,8 @@ const ApontamentoSchema = new mongoose.Schema({
     default: Date.now
   }
 });
+
+ApontamentoSchema.plugin(mongoosePaginate);
 
 mongoose.model("Apontamento", ApontamentoSchema);
 

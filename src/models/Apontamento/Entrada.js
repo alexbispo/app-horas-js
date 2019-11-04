@@ -8,10 +8,6 @@ const EntradaSchema = new mongoose.Schema({
   minuto: {
     type: Number,
     required: true
-  },
-  criadoEm: {
-    type: Date,
-    default: Date.now
   }
 });
 

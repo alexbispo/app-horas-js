@@ -4,10 +4,6 @@ const ParadaSchema = new mongoose.Schema({
   duracaoEmMinutos: {
     type: Number,
     required: true
-  },
-  criadoEm: {
-    type: Date,
-    default: Date.now
   }
 });
 
