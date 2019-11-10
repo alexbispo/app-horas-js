@@ -1,19 +1,27 @@
 const mongoose = require('mongoose');
 const mongoosePaginate = require('mongoose-paginate');
 
-const EntradaSchema = require('./Entrada');
-const SaidaSchema = require('./Saida');
-const ParadaSchema = require('./Parada');
-
-
 const ApontamentoSchema = new mongoose.Schema({
   dia: {
-    type: Date,
+    type: String,
     required: true
   },
-  entrada: EntradaSchema,
-  saida: SaidaSchema,
-  paradas: [ParadaSchema],
+  entrada: {
+    type: String,
+    required: true
+  },
+  saida: {
+    type: String
+  },
+  pausas: [
+    { duracao: String }
+  ],
+  totalEmMinutos: {
+    type: Number
+  },
+  total: {
+    type: String
+  },
   criadoEm: {
     type: Date,
     default: Date.now

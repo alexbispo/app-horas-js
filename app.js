@@ -12,7 +12,7 @@ mongoose.connect('mongodb://localhost:27017/app-horas', {
   useUnifiedTopology: true
 });
 
-require('./src/models/Apontamento/Apontamento');
+require('./src/models/Apontamento');
 
 app.use('/api', require('./src/routes'));
 
