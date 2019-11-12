@@ -61,13 +61,13 @@ const pausasValidas = (pausas) => {
 
   if (!pausas instanceof Array) return false;
 
-  const invalido = pausas.find(({ duracao }) => parseInt(duracao) < 0  || parseInt(duracao) > 1440 );
+  const invalido = pausas.find((p) => parseInt(p) < 0  || parseInt(p) > 1440 );
   if (invalido) return false;
 
   return true;
 }
 
-const calcularTotalEmMinutos = (entrada, saida, pausas) => {
+const calcularTotais = (entrada, saida, pausas) => {
   let horaEntrada, minutoEntrada, horaSaida, minutoSaida;
 
   [horaEntrada, minutoEntrada] = entrada.split(':');
@@ -80,16 +80,21 @@ const calcularTotalEmMinutos = (entrada, saida, pausas) => {
 
   const horas =  horaSaida - horaEntrada;
 
-  const minutoPausa = pausas.map((p) => parseInt(p.duracao) ).reduce((acc, d) => acc + d );
+  const totalPausaEmMinutos = pausas.map((p) => parseInt(p) ).reduce((acc, d) => acc + d );
 
-  const totalEmMinutos = ((horas * 60) - minutoEntrada) + minutoSaida - minutoPausa;
+  const totalEmMinutos = ((horas * 60) - minutoEntrada) + minutoSaida - totalPausaEmMinutos;
 
-  const totalHora = parseInt(totalEmMinutos / 60);
+  const totalPausas = converterParaHorasHumanas(totalPausaEmMinutos);
+
+  const total = converterParaHorasHumanas(totalEmMinutos);
+
+  return { totalEmMinutos, total, totalPausas };
+}
+
+const converterParaHorasHumanas = (minutos) => {
+  const totalHora = parseInt(minutos / 60);
   const prefix = totalHora < 10 ? "0" : "";
-
-  const total = `${prefix}${totalHora}:${totalEmMinutos % 60}`;
-
-  return { totalEmMinutos, total };
+  return `${prefix}${totalHora}:${minutos % 60}`;
 }
 
 module.exports = {
@@ -125,13 +130,14 @@ module.exports = {
       return res.status(422).json({ erro: "campo 'pausas' possui valor inválido." });
     }
 
-    const { totalEmMinutos, total } = calcularTotalEmMinutos(entrada, saida, pausas);
+    const { totalEmMinutos, total, totalPausas } = calcularTotais(entrada, saida, pausas);
 
     const apontamento = await Apontamento.create({
       dia,
       entrada,
       saida,
       pausas,
+      totalPausas,
       totalEmMinutos,
       total
     });

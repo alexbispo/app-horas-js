@@ -13,9 +13,10 @@ const ApontamentoSchema = new mongoose.Schema({
   saida: {
     type: String
   },
-  pausas: [
-    { duracao: String }
-  ],
+  pausas: [String],
+  totalPausas: {
+    type: String
+  },
   totalEmMinutos: {
     type: Number
   },
